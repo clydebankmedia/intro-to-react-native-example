@@ -6,8 +6,8 @@ A React Native journaling app built with Expo. This is the starter project for t
 
 1. Clone this repo
 
-git clone https://github.com/YOUR_USERNAME/cat-journal-starter.git
-cd cat-journal-starter
+git clone https://github.com/clydebankmedia/intro-to-react-native-example.git
+cd intro-to-react-native-example
 
 2. Install dependencies
 
