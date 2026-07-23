@@ -1,90 +1,16 @@
-import { useState } from "react";
 import {
-	FlatList,
-	Modal,
     StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
     View
 } from "react-native";
 
 export default function Journal() {
-	const [entries, setEntries] = useState([]); 
-	const [modalVisible, setMOdalVisible]= useState(false); 
-	const [journalEntryTitle, setJournalEntryTitle] = useState(""); 
-	const [journalEntryText, setJournalEntryText] = useState("");
-	
-	const addJournalEntry = () => {
-		if(journalEntryTitle.trim() === "") return; 
-		const newEntry = {
-			id: Date.now().toString(),
-			title: journalEntryTitle, 
-			text: journalEntryText, 
-			date: new Date().toLocaleDateString()
-		}
+	// TODO: ADD STATE VARIABLES
 
-		setEntries([newEntry, ...entries]); // add new entry to our journal entries
+	// TODO: ADD FUNCTION TO ADD ENTRIES TO THE STATE
 
-		// clear the input data
-		setJournalEntryTitle(""); 
-		setJournalEntryText(""); 
-		setMOdalVisible(false); 
-	}
 	return (
     	<View style={styles.container}>
-			<FlatList
-				data={entries}
-				contentContainerStyle={entries.length === 0 && styles.emptyList}
-				ListEmptyComponent={
-					<View style={styles.empty}>
-						<Text style={styles.emptyText}>No Entries Yet</Text>
-						<Text style={styles.emptySubtext}>Tap + to add your first entry</Text>
-					</View>
-				}
-				renderItem={({item}) => (
-					<View style={styles.card}>
-						<Text style ={styles.cardTitle}>{item.title}</Text>
-						<Text style={styles.cardText}>{item.text}</Text>
-						<Text style={styles.cardDate}>{item.date}</Text>
-					</View>
-				)}/>
-			<TouchableOpacity
-				style={styles.fab}
-				onPress={() => setMOdalVisible(true)}>
-					<Text style={styles.fabText}>+</Text>
-			</TouchableOpacity>
-			<Modal
-				visible={modalVisible}
-				transparent={true}>
-				<View style ={styles.modalOverlay}>
-					<View style={styles.modalContent}>
-						<Text>Add New Journal Entry</Text>
-						<TextInput
-							placeholder="Title"
-							style = {styles.input}
-							value={journalEntryTitle}
-							onChangeText={setJournalEntryTitle}/>
-						<TextInput
-							placeholder="Text"
-							style = {styles.input}
-							value={journalEntryText}
-							onChangeText={setJournalEntryText}
-							multiline={true}
-							numberOfLines={4}/>
-						<TouchableOpacity
-							style={styles.saveButton}
-							onPress={() => addJournalEntry()}>
-							<Text style={styles.saveButtonText}>Save Entry</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.cancelButton}
-							onPress={() => setMOdalVisible(false)}>
-							<Text style={styles.cancelButtonText}>Cancel</Text>
-						</TouchableOpacity>
-					</View>
-				</View>
-			</Modal>
+			{/*TODO: ADD JSX TO BUILD THE UI FOR A SIMPLE JOURNALING APP*/}
     	</View>
   	);
 }
