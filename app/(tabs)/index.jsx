@@ -1,90 +1,94 @@
 import { useState } from "react";
 import {
-	FlatList,
-	Modal,
     StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+    View, 
+	FlatList, 
+	Text,
+	TouchableOpacity, 
+	Modal, 
+	TextInput
 } from "react-native";
 
 export default function Journal() {
-	const [entries, setEntries] = useState([]); 
-	const [modalVisible, setMOdalVisible]= useState(false); 
-	const [journalEntryTitle, setJournalEntryTitle] = useState(""); 
-	const [journalEntryText, setJournalEntryText] = useState("");
-	
-	const addJournalEntry = () => {
-		if(journalEntryTitle.trim() === "") return; 
+	const [entries, setEntries] = useState([]); // journal entries
+
+	const [title, setTitle] = useState(""); // journalTitle
+	const [text, setText] = useState(""); // journalText
+	const [isModalVisible, setIsModalVisible] = useState(false); // opening and closes a modal
+
+	function addEntry() {
 		const newEntry = {
-			id: Date.now().toString(),
-			title: journalEntryTitle, 
-			text: journalEntryText, 
-			date: new Date().toLocaleDateString()
+			id: Date.now().toString(), 
+			title: title, 
+			text: text, 
+			date: new Date().toLocaleDateString(), 
 		}
 
-		setEntries([newEntry, ...entries]); // add new entry to our journal entries
+		setEntries([newEntry, ...entries])
 
-		// clear the input data
-		setJournalEntryTitle(""); 
-		setJournalEntryText(""); 
-		setMOdalVisible(false); 
+		setTitle(""); 
+		setText(""); 
+		setIsModalVisible(false); 
 	}
+
 	return (
     	<View style={styles.container}>
+			
 			<FlatList
 				data={entries}
-				contentContainerStyle={entries.length === 0 && styles.emptyList}
+				contentContainerStyle={entries.length === 0 &&  styles.emptyList}
 				ListEmptyComponent={
 					<View style={styles.empty}>
 						<Text style={styles.emptyText}>No Entries Yet</Text>
 						<Text style={styles.emptySubtext}>Tap + to add your first entry</Text>
 					</View>
 				}
-				renderItem={({item}) => (
+				renderItem={({ item }) => (
 					<View style={styles.card}>
-						<Text style ={styles.cardTitle}>{item.title}</Text>
-						<Text style={styles.cardText}>{item.text}</Text>
-						<Text style={styles.cardDate}>{item.date}</Text>
+							<Text style={styles.cardTitle}>{item.title}</Text>
+							<Text style={styles.cardText}>{item.text}</Text>
+							<Text style={styles.cardDAte}>{item.date}</Text>
 					</View>
-				)}/>
-			<TouchableOpacity
-				style={styles.fab}
-				onPress={() => setMOdalVisible(true)}>
-					<Text style={styles.fabText}>+</Text>
-			</TouchableOpacity>
-			<Modal
-				visible={modalVisible}
-				transparent={true}>
-				<View style ={styles.modalOverlay}>
-					<View style={styles.modalContent}>
-						<Text>Add New Journal Entry</Text>
-						<TextInput
-							placeholder="Title"
-							style = {styles.input}
-							value={journalEntryTitle}
-							onChangeText={setJournalEntryTitle}/>
-						<TextInput
-							placeholder="Text"
-							style = {styles.input}
-							value={journalEntryText}
-							onChangeText={setJournalEntryText}
-							multiline={true}
-							numberOfLines={4}/>
-						<TouchableOpacity
-							style={styles.saveButton}
-							onPress={() => addJournalEntry()}>
-							<Text style={styles.saveButtonText}>Save Entry</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.cancelButton}
-							onPress={() => setMOdalVisible(false)}>
-							<Text style={styles.cancelButtonText}>Cancel</Text>
-						</TouchableOpacity>
-					</View>
-				</View>
-			</Modal>
+				)}
+				/>
+			
+				<TouchableOpacity
+					style={styles.fab}
+					onPress={() => setIsModalVisible(true)}>
+						<Text style={styles.fabText}>+</Text>
+				</TouchableOpacity>
+
+				<Modal
+					visible={isModalVisible}
+					transparent={true}>
+						<View style={styles.modalOverlay}>
+							<View style ={styles.modalContent}>
+								<Text style={styles.modalTitle}>New Entry</Text>
+								<TextInput
+									style={styles.input}
+									placeholder="Title"
+									value={title}
+									onChangeText={setTitle}/>
+								<TextInput
+									style={styles.textArea}
+									placeholder="Write about your cat..."
+									value={text}
+									onChangeText={setText}/>
+								
+								<TouchableOpacity
+									style={styles.saveButton}
+									onPress={addEntry}>
+										<Text style={styles.saveButtonText}>Add New Entry</Text>
+									</TouchableOpacity>
+								<TouchableOpacity
+									style={styles.cancelButton}
+									onPress={() => setIsModalVisible(false)}>
+										<Text style={styles.cancelButtonText}>Cancel</Text>
+									</TouchableOpacity>
+							</View>
+						</View>
+				</Modal>
+
     	</View>
   	);
 }
